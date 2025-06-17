@@ -10,7 +10,7 @@
         private System.Windows.Forms.Button btnToBottom;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ListBox listBoxPlaylists;
-        private System.Windows.Forms.ListBox listBoxItems;
+        private System.Windows.Forms.DataGridView dataGridViewItems;
 
         protected override void Dispose(bool disposing)
         {
@@ -29,7 +29,7 @@
             btnToBottom = new Button();
             btnDelete = new Button();
             listBoxPlaylists = new ListBox();
-            listBoxItems = new ListBox();
+            dataGridViewItems = new DataGridView();
             SuspendLayout();
             // 
             // btnSelectPlaylist
@@ -101,21 +101,34 @@
             listBoxPlaylists.Size = new Size(197, 229);
             listBoxPlaylists.TabIndex = 6;
             // 
-            // listBoxItems
+            // dataGridViewItems
             // 
-            listBoxItems.FormattingEnabled = true;
-            listBoxItems.ItemHeight = 15;
-            listBoxItems.Location = new Point(226, 12);
-            listBoxItems.Name = "listBoxItems";
-            listBoxItems.Size = new Size(345, 574);
-            listBoxItems.TabIndex = 7;
+            dataGridViewItems.AllowUserToAddRows = false;
+            dataGridViewItems.AllowUserToDeleteRows = false;
+            dataGridViewItems.AllowUserToResizeRows = false;
+            dataGridViewItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewItems.Location = new Point(226, 12);
+            dataGridViewItems.Name = "dataGridViewItems";
+            dataGridViewItems.ReadOnly = true;
+            dataGridViewItems.RowHeadersVisible = false;
+            dataGridViewItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewItems.Size = new Size(345, 574);
+            dataGridViewItems.TabIndex = 7;
+            dataGridViewItems.MultiSelect = false;
+            dataGridViewItems.Columns.AddRange(
+                new DataGridViewTextBoxColumn { Name = "Title", HeaderText = "Title", DataPropertyName = "Title", Width = 180 },
+                new DataGridViewTextBoxColumn { Name = "Year", HeaderText = "Year", DataPropertyName = "Year", Width = 50 },
+                new DataGridViewTextBoxColumn { Name = "Library", HeaderText = "Library", DataPropertyName = "Library", Width = 90 }
+            );
+            dataGridViewItems.CellDoubleClick += dataGridViewItems_CellDoubleClick;
+            dataGridViewItems.SelectionChanged += dataGridViewItems_SelectionChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(583, 592);
-            Controls.Add(listBoxItems);
+            Controls.Add(dataGridViewItems);
             Controls.Add(listBoxPlaylists);
             Controls.Add(btnDelete);
             Controls.Add(btnToBottom);
