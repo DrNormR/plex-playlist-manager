@@ -103,7 +103,8 @@ namespace plex_playlist_manager_4
             var sel = (PlexPlaylist)listBoxPlaylists.SelectedItem;
             var items = await FetchPlaylistItems(sel.RatingKey);
 
-            dataGridViewItems.DataSource = items;
+            // Use RefreshDataGrid to ensure only the desired columns are shown
+            RefreshDataGrid(items);
         }
 
         // Helper to get selected PlexItem from DataGridView
@@ -131,12 +132,35 @@ namespace plex_playlist_manager_4
 
         private void RefreshDataGrid(List<PlexItem> items, int selectIdx = -1)
         {
-            dataGridViewItems.AutoGenerateColumns = true; // Add this line
-            dataGridViewItems.Columns.Clear();            // Clear any designer columns
+            dataGridViewItems.AutoGenerateColumns = false;
+            dataGridViewItems.Columns.Clear();
+
+            // Add only the columns you want to display
+            dataGridViewItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Title",
+                HeaderText = "Title",
+                Name = "colTitle",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+            dataGridViewItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Year",
+                HeaderText = "Year",
+                Name = "colYear"
+            });
+            dataGridViewItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Library",
+                HeaderText = "Library",
+                Name = "colLibrary"
+            });
+
             dataGridViewItems.DataSource = null;
             dataGridViewItems.DataSource = items;
+
             if (selectIdx >= 0 && selectIdx < items.Count)
-                dataGridViewItems.Rows[selectIdx].Selected = true;
+                SetSelectedIndex(selectIdx);
 
             dataGridViewItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
