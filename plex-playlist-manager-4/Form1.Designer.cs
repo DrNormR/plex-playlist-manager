@@ -30,6 +30,7 @@
             btnDelete = new Button();
             listBoxPlaylists = new ListBox();
             dataGridViewItems = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewItems).BeginInit();
             SuspendLayout();
             // 
             // btnSelectPlaylist
@@ -106,20 +107,17 @@
             dataGridViewItems.AllowUserToAddRows = false;
             dataGridViewItems.AllowUserToDeleteRows = false;
             dataGridViewItems.AllowUserToResizeRows = false;
+            dataGridViewItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewItems.AutoGenerateColumns = true;
             dataGridViewItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewItems.Location = new Point(226, 12);
+            dataGridViewItems.MultiSelect = false;
             dataGridViewItems.Name = "dataGridViewItems";
             dataGridViewItems.ReadOnly = true;
             dataGridViewItems.RowHeadersVisible = false;
             dataGridViewItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewItems.Size = new Size(345, 574);
+            dataGridViewItems.Size = new Size(575, 574);
             dataGridViewItems.TabIndex = 7;
-            dataGridViewItems.MultiSelect = false;
-            dataGridViewItems.Columns.AddRange(
-                new DataGridViewTextBoxColumn { Name = "Title", HeaderText = "Title", DataPropertyName = "Title", Width = 180 },
-                new DataGridViewTextBoxColumn { Name = "Year", HeaderText = "Year", DataPropertyName = "Year", Width = 50 },
-                new DataGridViewTextBoxColumn { Name = "Library", HeaderText = "Library", DataPropertyName = "Library", Width = 90 }
-            );
             dataGridViewItems.CellDoubleClick += dataGridViewItems_CellDoubleClick;
             dataGridViewItems.SelectionChanged += dataGridViewItems_SelectionChanged;
             // 
@@ -127,7 +125,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(583, 592);
+            ClientSize = new Size(827, 592);
             Controls.Add(dataGridViewItems);
             Controls.Add(listBoxPlaylists);
             Controls.Add(btnDelete);
@@ -139,6 +137,7 @@
             Name = "Form1";
             Text = "Plex Playlist Manager";
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridViewItems).EndInit();
             ResumeLayout(false);
         }
 

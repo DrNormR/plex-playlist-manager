@@ -122,15 +122,23 @@ namespace plex_playlist_manager_4
         private void SetSelectedIndex(int idx)
         {
             if (idx >= 0 && idx < dataGridViewItems.Rows.Count)
+            {
+                dataGridViewItems.ClearSelection();
                 dataGridViewItems.Rows[idx].Selected = true;
+                dataGridViewItems.CurrentCell = dataGridViewItems.Rows[idx].Cells[0];
+            }
         }
 
         private void RefreshDataGrid(List<PlexItem> items, int selectIdx = -1)
         {
+            dataGridViewItems.AutoGenerateColumns = true; // Add this line
+            dataGridViewItems.Columns.Clear();            // Clear any designer columns
             dataGridViewItems.DataSource = null;
             dataGridViewItems.DataSource = items;
             if (selectIdx >= 0 && selectIdx < items.Count)
                 dataGridViewItems.Rows[selectIdx].Selected = true;
+
+            dataGridViewItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private async void btnMoveUp_Click_1(object sender, EventArgs e)
@@ -146,7 +154,8 @@ namespace plex_playlist_manager_4
 
             items.RemoveAt(idx);
             items.Insert(idx - 1, moving);
-            RefreshDataGrid(items, idx - 1);
+            RefreshDataGrid(items);
+            SetSelectedIndex(idx - 1);
         }
 
         private async void btnMoveDown_Click_1(object sender, EventArgs e)
@@ -162,7 +171,8 @@ namespace plex_playlist_manager_4
 
             items.RemoveAt(idx);
             items.Insert(idx + 1, moving);
-            RefreshDataGrid(items, idx + 1);
+            RefreshDataGrid(items);
+            SetSelectedIndex(idx + 1);
         }
 
         private async void btnToTop_Click_1(object sender, EventArgs e)
